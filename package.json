@@ -1,0 +1,25 @@
+{
+  "name": "pdf-to-markdown-converter",
+  "version": "1.0.0",
+  "description": "將 PDF 檔案轉換為 Markdown 格式的工具",
+  "main": "convert_pdfs.js",
+  "scripts": {
+    "start": "node convert_pdfs.js",
+    "test": "node test.js"
+  },
+  "keywords": [
+    "pdf",
+    "markdown",
+    "converter",
+    "pandoc",
+    "pdftotext"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bin": {
+    "convert-pdfs": "./convert_pdfs.js"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}
