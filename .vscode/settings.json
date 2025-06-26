@@ -1,0 +1,23 @@
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": true,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "editor.wordWrap": "on",
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+  "javascript.preferences.quoteStyle": "single",
+  "markdown.preview.fontSize": 14,
+  "markdown.preview.lineHeight": 1.6,
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "files.associations": {
+    "*.md": "markdown"
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/lawsmd": true,
+    "**/*.txt": true,
+    "result.md": true
+  }
+}

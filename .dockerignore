@@ -1,0 +1,31 @@
+# Docker 相關檔案
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# Node.js 相關
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 輸出檔案
+lawsmd/
+*.txt
+result.md
+
+# 作業系統相關
+.DS_Store
+Thumbs.db
+
+# IDE 相關
+.vscode/
+*.swp
+*.swo
+
+# 暫存檔案
+*.tmp
+*.temp
+
+# 日誌檔案
+*.log

@@ -1,0 +1,57 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "轉換 PDF 檔案",
+      "type": "shell",
+      "command": "node",
+      "args": [
+        "convert_pdfs.js"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "執行測試",
+      "type": "shell",
+      "command": "node",
+      "args": [
+        "test.js"
+      ],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "檢查工具版本",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-c",
+        "echo 'Node.js:' $(node --version) && echo 'pdftotext:' $(pdftotext -v 2>&1 | head -1) && echo 'pandoc:' $(pandoc --version | head -1)"
+      ],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

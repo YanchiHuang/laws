@@ -7,6 +7,87 @@ const { promisify } = require('util');
 const execAsync = promisify(exec);
 
 /**
+ * 將純文字轉換為 Markdown 格式
+ * @param {string} textContent - 純文字內容
+ * @param {string} title - 文件標題
+ * @returns {string} Markdown 格式的內容
+ */
+function convertTextToMarkdown(textContent, title) {
+    // 清理文字內容
+    let content = textContent.trim();
+    
+    // 分割成行
+    const lines = content.split('\n');
+    const mdLines = [];
+    
+    // 新增標題
+    mdLines.push(`# ${title}`);
+    mdLines.push('');
+    
+    let inCodeBlock = false;
+    let currentParagraph = [];
+    
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        
+        // 空行處理
+        if (line === '') {
+            if (currentParagraph.length > 0) {
+                mdLines.push(currentParagraph.join(' '));
+                mdLines.push('');
+                currentParagraph = [];
+            }
+            continue;
+        }
+        
+        // 檢測標題（可能包含條、章、節等關鍵字）
+        if (line.match(/^第[一二三四五六七八九十\d]+[條章節]/u) || 
+            line.match(/^[一二三四五六七八九十\d]+[、\.]/u) ||
+            line.match(/^[\(（][一二三四五六七八九十\d]+[\)）]/u)) {
+            
+            if (currentParagraph.length > 0) {
+                mdLines.push(currentParagraph.join(' '));
+                mdLines.push('');
+                currentParagraph = [];
+            }
+            
+            // 根據內容長度決定標題級別
+            if (line.match(/^第[一二三四五六七八九十\d]+條/u)) {
+                mdLines.push(`## ${line}`);
+            } else {
+                mdLines.push(`### ${line}`);
+            }
+            mdLines.push('');
+            continue;
+        }
+        
+        // 檢測列表項目
+        if (line.match(/^[一二三四五六七八九十\d]+[、\.]/u) ||
+            line.match(/^[\(（][一二三四五六七八九十\d]+[\)）]/u)) {
+            
+            if (currentParagraph.length > 0) {
+                mdLines.push(currentParagraph.join(' '));
+                mdLines.push('');
+                currentParagraph = [];
+            }
+            
+            mdLines.push(`- ${line}`);
+            continue;
+        }
+        
+        // 一般段落內容
+        currentParagraph.push(line);
+    }
+    
+    // 處理最後的段落
+    if (currentParagraph.length > 0) {
+        mdLines.push(currentParagraph.join(' '));
+    }
+    
+    return mdLines.join('\n');
+}
+
+/**
  * 轉換 PDF 檔案為 Markdown 格式
  * @param {string} pdfPath - PDF 檔案路徑
  * @param {string} outputDir - 輸出目錄
@@ -33,8 +114,10 @@ async function convertPdf(pdfPath, outputDir) {
         // 使用 pdftotext 轉換 PDF 為文字
         await execAsync(`pdftotext "${pdfPath}" "${textPath}"`);
         
-        // 使用 pandoc 轉換文字為 Markdown
-        await execAsync(`pandoc "${textPath}" -f plain -t markdown --toc -o "${mdPath}"`);
+        // 讀取文字檔案並手動轉換為 Markdown
+        const textContent = fs.readFileSync(textPath, 'utf8');
+        const markdownContent = convertTextToMarkdown(textContent, baseName);
+        fs.writeFileSync(mdPath, markdownContent, 'utf8');
         
     } catch (error) {
         result.status = '❌';

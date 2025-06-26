@@ -104,10 +104,12 @@ node convert_pdfs.js
 ### 常見問題
 
 1. **pdftotext 找不到**
+
    - 確認已安裝 poppler-utils
    - 確認 pdftotext 在系統 PATH 中
 
 2. **pandoc 找不到**
+
    - 從官網下載並安裝 pandoc
    - 確認 pandoc 在系統 PATH 中
 
@@ -120,6 +122,65 @@ node convert_pdfs.js
 執行測試程式會檢查所有必要的相依軟體：
 
 ```bash
+npm test
+```
+
+## 開發容器環境
+
+本專案支援 Visual Studio Code 的開發容器功能，提供一致的開發環境。
+
+### 使用 Dev Container
+
+1. **前置需求**
+
+   - 安裝 [Visual Studio Code](https://code.visualstudio.com/)
+   - 安裝 [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+   - 安裝 VS Code 擴充套件: [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+
+2. **啟動開發容器**
+
+   ```bash
+   # 在 VS Code 中開啟專案資料夾
+   # 按 F1 或 Ctrl+Shift+P 開啟命令面板
+   # 輸入並選擇: "Dev Containers: Reopen in Container"
+   ```
+
+3. **或使用 Docker Compose**
+
+   ```bash
+   # 建立並啟動容器
+   docker-compose up -d
+
+   # 進入容器
+   docker-compose exec pdf-converter bash
+
+   # 停止容器
+   docker-compose down
+   ```
+
+### 開發容器特色
+
+- ✅ 預裝 Node.js 18
+- ✅ 預裝 pdftotext (poppler-utils)
+- ✅ 預裝 pandoc
+- ✅ 自動安裝專案依賴
+- ✅ 設定好的 VS Code 擴充套件
+- ✅ 統一的開發環境
+
+### 容器內的使用方式
+
+開發容器啟動後，所有指令都可以直接使用：
+
+```bash
+# 查看已安裝工具版本
+node --version
+pdftotext -v
+pandoc --version
+
+# 執行 PDF 轉換
+npm start
+
+# 執行測試
 npm test
 ```
 

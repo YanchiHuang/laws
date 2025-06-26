@@ -1,0 +1,50 @@
+{
+  "name": "PDF to Markdown 轉換器開發環境",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
+  // 容器設定
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "installOhMyZsh": true,
+      "upgradePackages": true
+    }
+  },
+  // 執行額外的設定指令
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  // 容器啟動後執行的指令
+  "postStartCommand": "echo '🚀 開發容器已準備就緒！'",
+  // 自訂設定
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.vscode-json",
+        "davidanson.vscode-markdownlint",
+        "ms-vscode.vscode-typescript-next",
+        "formulahendry.code-runner",
+        "ms-vscode.vscode-eslint"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "files.autoSave": "afterDelay",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true
+      }
+    }
+  },
+  // 連接埠轉發
+  "forwardPorts": [],
+  // 掛載設定
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+  ],
+  // 容器啟動時的工作目錄
+  "workspaceFolder": "/workspace",
+  // 容器內使用者設定
+  "remoteUser": "node",
+  // 容器啟動參數
+  "runArgs": [
+    "--name",
+    "pdf-converter-dev"
+  ]
+}

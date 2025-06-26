@@ -1,0 +1,19 @@
+# Docker Compose 配置檔
+version: "3.8"
+
+services:
+  pdf-converter:
+    build: .
+    container_name: pdf-converter-dev
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - node_modules:/workspace/node_modules
+    environment:
+      - NODE_ENV=development
+    stdin_open: true
+    tty: true
+    command: bash
+
+volumes:
+  node_modules:
